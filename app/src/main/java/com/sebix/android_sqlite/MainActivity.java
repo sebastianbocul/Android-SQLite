@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -54,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNo
 
     @Override
     public void onNoteClick(int position) {
-        Toast.makeText(getApplication(),"click"+ position,Toast.LENGTH_SHORT).show();
+        Intent intent= new Intent(this,NoteActivity.class);
+        intent.putExtra("note",mNotesList.get(position));
+        startActivity(intent);
     }
 }
