@@ -1,9 +1,11 @@
 package com.sebix.android_sqlite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,7 +18,7 @@ import com.sebix.android_sqlite.models.Note;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNoteListener {
     ArrayList<Note> mNotesList = new ArrayList<>();
     NotesAdapter mNotesAdapter;
     RecyclerView mRecyclerView;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         int animation = R.anim.slide_left;
-        mNotesAdapter = new NotesAdapter(mNotesList,animation);
+        mNotesAdapter = new NotesAdapter(mNotesList,animation,this);
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mNotesAdapter);
@@ -48,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
             Note note = new Note("Title #" + i, "", "Timestamp #" + i);
             mNotesList.add(note);
         }
+    }
+
+    @Override
+    public void onNoteClick(int position) {
+        Toast.makeText(getApplication(),"click"+ position,Toast.LENGTH_SHORT).show();
     }
 }
