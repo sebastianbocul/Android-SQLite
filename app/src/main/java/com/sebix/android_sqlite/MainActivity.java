@@ -1,6 +1,8 @@
 package com.sebix.android_sqlite;
 
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        mNotesAdapter = new NotesAdapter(mNotesList);
+        int animation = R.anim.slide_left;
+        mNotesAdapter = new NotesAdapter(mNotesList,animation);
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mNotesAdapter);
