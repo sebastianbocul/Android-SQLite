@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements
         int animation = R.anim.slide_left;
         mNotesAdapter = new NotesAdapter(mNotesList,animation,this);
         mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         new ItemTouchHelper(itemTouchHeloperCallBack).attachToRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mNotesAdapter);
     }

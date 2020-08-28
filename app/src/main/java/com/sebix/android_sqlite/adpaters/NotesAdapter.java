@@ -1,13 +1,11 @@
 package com.sebix.android_sqlite.adpaters;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,17 +20,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     ArrayList<Note> mNotesList = new ArrayList<>();
     private OnNoteListener onNoteListener;
 
-    public NotesAdapter(ArrayList<Note> mNotesList, int animation,OnNoteListener onNoteListener) {
+    public NotesAdapter(ArrayList<Note> mNotesList, int animation, OnNoteListener onNoteListener) {
         this.mNotesList = mNotesList;
         this.animation = animation;
-        this.onNoteListener=onNoteListener;
+        this.onNoteListener = onNoteListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
-        return new ViewHolder(view,onNoteListener);
+        return new ViewHolder(view, onNoteListener);
     }
 
     @Override
@@ -47,13 +45,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         return mNotesList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView mNoteTitle, mNoteTimestamp;
         OnNoteListener onNoteListener;
 
-        public ViewHolder(@NonNull View itemView,OnNoteListener onNoteListener) {
+        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
-            this.onNoteListener=onNoteListener;
+            this.onNoteListener = onNoteListener;
             mNoteTitle = itemView.findViewById(R.id.note_title);
             mNoteTimestamp = itemView.findViewById(R.id.note_timestamp);
             itemView.setOnLongClickListener(this);
@@ -67,7 +65,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         @Override
         public boolean onLongClick(View v) {
-            setAnimation(v,R.anim.shake);
+            setAnimation(v, R.anim.shake);
             return false;
         }
     }
@@ -77,7 +75,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         view.startAnimation(anim);
     }
 
-    public interface OnNoteListener{
+    public interface OnNoteListener {
         void onNoteClick(int position);
     }
 }
