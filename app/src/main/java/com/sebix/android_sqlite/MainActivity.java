@@ -2,6 +2,7 @@ package com.sebix.android_sqlite;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -12,12 +13,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sebix.android_sqlite.adpaters.NotesAdapter;
 import com.sebix.android_sqlite.models.Note;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNoteListener {
+public class MainActivity extends AppCompatActivity implements
+        NotesAdapter.OnNoteListener,
+        FloatingActionButton.OnClickListener {
+
     ArrayList<Note> mNotesList = new ArrayList<>();
     NotesAdapter mNotesAdapter;
     RecyclerView mRecyclerView;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNo
         initRecyclerView();
         fillNotesList();
         mNotesAdapter.notifyDataSetChanged();
+        findViewById(R.id.fab).setOnClickListener(this);
 
         setSupportActionBar((Toolbar)findViewById(R.id.notes_toolbar));
         setTitle("Notes");
@@ -55,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnNo
     public void onNoteClick(int position) {
         Intent intent= new Intent(this,NoteActivity.class);
         intent.putExtra("note",mNotesList.get(position));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent= new Intent(this,NoteActivity.class);
         startActivity(intent);
     }
 }
