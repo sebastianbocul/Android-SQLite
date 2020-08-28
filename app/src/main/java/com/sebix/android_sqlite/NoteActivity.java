@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sebix.android_sqlite.models.Note;
@@ -57,7 +58,6 @@ public class NoteActivity extends AppCompatActivity implements
             setNewNote();
             disableContentInteraction();
         }
-        Toast.makeText(this, "note" + note, Toast.LENGTH_SHORT).show();
         setListeners();
     }
 
@@ -165,7 +165,6 @@ public class NoteActivity extends AppCompatActivity implements
     @Override
     public boolean onDoubleTap(MotionEvent e) {
         enableEditMode();
-        Toast.makeText(this, "onDoubleTap", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -210,6 +209,21 @@ public class NoteActivity extends AppCompatActivity implements
             onClick(mCheck);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("mode",mMode);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mMode=savedInstanceState.getInt("mode");
+        if(mMode == EDIT_MODE_ENABLED){
+            enableEditMode();
         }
     }
 }

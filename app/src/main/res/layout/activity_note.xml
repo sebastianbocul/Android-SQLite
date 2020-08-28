@@ -27,5 +27,6 @@
         android:layout_height="match_parent"
         android:text="Test test"
         android:gravity="top"
-        android:textSize="23sp"/>
+        android:textSize="23sp"
+        android:imeOptions="flagNoExtractUi"/>
 </LinearLayout>
