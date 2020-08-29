@@ -4,7 +4,9 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.sebix.android_sqlite.async.DeleteAsyncTask;
 import com.sebix.android_sqlite.async.InsertAsyncTask;
+import com.sebix.android_sqlite.async.UpdateAsyncTask;
 import com.sebix.android_sqlite.models.Note;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class NoteRepository {
     }
 
     public void updateNote(Note note){
-
+        new UpdateAsyncTask(mNoteDatabase.getNoteDeo()).execute(note);
     }
 
     public LiveData<List<Note>> retrieveNotes(){
@@ -30,6 +32,6 @@ public class NoteRepository {
     }
 
     public void deleteNote(Note note){
-
+        new DeleteAsyncTask(mNoteDatabase.getNoteDeo()).execute(note);
     }
 }

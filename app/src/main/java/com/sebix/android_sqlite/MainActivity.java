@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements
         int animation = R.anim.slide_left;
         mNotesAdapter = new NotesAdapter(mNotesList,animation,this);
         mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         new ItemTouchHelper(itemTouchHeloperCallBack).attachToRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mNotesAdapter);
     }
@@ -111,5 +111,6 @@ public class MainActivity extends AppCompatActivity implements
     private void deleteNote(Note note,int position){
         mNotesList.remove(note);
         mNotesAdapter.notifyItemRemoved(position);
+        mNoteRepository.deleteNote(note);
     }
 }
