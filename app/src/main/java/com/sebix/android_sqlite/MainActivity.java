@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sebix.android_sqlite.adpaters.NotesAdapter;
 import com.sebix.android_sqlite.models.Note;
+import com.sebix.android_sqlite.persistance.NoteRepository;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
 public class MainActivity extends AppCompatActivity implements
         NotesAdapter.OnNoteListener,
@@ -28,18 +32,36 @@ public class MainActivity extends AppCompatActivity implements
     ArrayList<Note> mNotesList = new ArrayList<>();
     NotesAdapter mNotesAdapter;
     RecyclerView mRecyclerView;
-
+    private NoteRepository mNoteRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initRecyclerView();
-        fillNotesList();
-        mNotesAdapter.notifyDataSetChanged();
+        mNoteRepository=new NoteRepository(this);
+
+        retrieveNotes();
+        //  fillNotesList();
+
         findViewById(R.id.fab).setOnClickListener(this);
 
         setSupportActionBar((Toolbar)findViewById(R.id.notes_toolbar));
         setTitle("Notes");
+    }
+
+    private void retrieveNotes() {
+        mNoteRepository.retrieveNotes().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                if(mNotesList.size()>0){
+                    mNotesList.clear();
+                }
+                if(notes!=null){
+                    mNotesList.addAll(notes);
+                }
+                mNotesAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void initRecyclerView() {
