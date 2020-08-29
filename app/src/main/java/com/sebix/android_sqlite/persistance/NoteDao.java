@@ -12,7 +12,7 @@ import com.sebix.android_sqlite.models.Note;
 import java.util.List;
 
 @Dao
-interface NoteDao {
+public interface NoteDao {
     @Insert
     long[] insertNotes(Note...notes);
 

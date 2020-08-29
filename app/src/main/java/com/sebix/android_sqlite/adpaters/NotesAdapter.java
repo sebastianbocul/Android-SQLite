@@ -1,5 +1,6 @@
 package com.sebix.android_sqlite.adpaters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sebix.android_sqlite.R;
 import com.sebix.android_sqlite.models.Note;
+import com.sebix.android_sqlite.util.Utility;
 
 import java.util.ArrayList;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
+    private static final String TAG = "NotesAdapter";
     int animation;
     ArrayList<Note> mNotesList = new ArrayList<>();
     private OnNoteListener onNoteListener;
@@ -35,9 +38,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mNoteTitle.setText(mNotesList.get(position).getTitle());
-        holder.mNoteTimestamp.setText(mNotesList.get(position).getTimestamp());
-        setAnimation(holder.itemView, animation);
+        try {
+            String month = mNotesList.get(position).getTimestamp().substring(0,2);
+            month= Utility.getMonthFromNumber(month);
+            String year = mNotesList.get(position).getTimestamp().substring(3);
+            String timestamp = month +" " + year;
+            holder.mNoteTitle.setText(mNotesList.get(position).getTitle());
+            holder.mNoteTimestamp.setText(mNotesList.get(position).getTimestamp());
+            setAnimation(holder.itemView, animation);
+        }catch (NullPointerException e){
+            Log.d(TAG, "onBindViewHolder:  ERROR");
+        }
     }
 
     @Override

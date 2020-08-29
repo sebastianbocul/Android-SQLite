@@ -2,6 +2,7 @@ package com.sebix.android_sqlite;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -28,7 +29,7 @@ import java.util.Observable;
 public class MainActivity extends AppCompatActivity implements
         NotesAdapter.OnNoteListener,
         FloatingActionButton.OnClickListener {
-
+    private static final String TAG = "MainActivity";
     ArrayList<Note> mNotesList = new ArrayList<>();
     NotesAdapter mNotesAdapter;
     RecyclerView mRecyclerView;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
 
         retrieveNotes();
         //  fillNotesList();
-
+        Log.d(TAG, "onCreate: " + Thread.currentThread().getName());
         findViewById(R.id.fab).setOnClickListener(this);
 
         setSupportActionBar((Toolbar)findViewById(R.id.notes_toolbar));
