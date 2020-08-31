@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sebix.android_sqlite.adpaters.NotesAdapter;
@@ -68,10 +69,11 @@ public class MainActivity extends AppCompatActivity implements
     private void initRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,1);
         int animation = R.anim.slide_left;
         mNotesAdapter = new NotesAdapter(mNotesList,animation,this);
         mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         new ItemTouchHelper(itemTouchHeloperCallBack).attachToRecyclerView(mRecyclerView);
         mRecyclerView.setAdapter(mNotesAdapter);
     }
